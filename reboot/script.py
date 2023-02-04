@@ -18,5 +18,5 @@ def service():
 
 
 if __name__ == "__main__":
-    print("reboot service started")
+    print("::reboot service started...")
     service()

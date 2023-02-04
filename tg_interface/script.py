@@ -16,9 +16,6 @@ AUTHORIZED_USERS: List[str] = ["sanixdarker", "elhmn42"]
 
 
 def execute_cmd(_input: str):
-    logging.info(f"{_input=}")
-    logging.info(f'{_input.split(" ")=}')
-
     return subprocess.getoutput(_input)
     # return (
     #     result.stdout.decode("utf-8") if result.stdout is not None else None,
@@ -44,8 +41,9 @@ def exec_callback(update: Update, context: CCT) -> None:
     try:
         if is_authorized(update) and is_private(update):
             _command = update.message.text
-            stdout = execute_cmd(_command)
+            logging.info(f"{_command=}")
 
+            stdout = execute_cmd(_command)
             context.bot.send_message(
                 chat_id=update.message.chat_id,
                 text=(
@@ -65,6 +63,8 @@ def set_callback() -> Updater:
 
 
 if __name__ == "__main__":
+    print("::tg-interface service started...")
+
     updater = set_callback()
     updater.start_polling()
 
