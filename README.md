@@ -6,7 +6,7 @@ Copy the service config to the appropriate directory !
 
 ```bash
 cd /lib/systemd/system
-cp /home/sa/services/service/self-xxxx.service
+cp /home/sa/services/service/self-xxxx.service .
 ```
 
 Then, use systemctl to reload the daemon + enable the service

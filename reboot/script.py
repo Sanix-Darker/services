@@ -6,6 +6,7 @@ from datetime import datetime
 def service():
     now = datetime.now()
     while True:
+        time.sleep(30)
         # if the hour is  between 1hour and 3hour,
         # we are going to reboot
         if 1 <= now.hour <= 3:
