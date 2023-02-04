@@ -1,0 +1,10 @@
+[Unit]
+Description=Reboot the service when it's 1h <= 3h
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python /home/sa/services/reboot/script.py
+User=sa
+
+[Install]
+WantedBy=multi-user.target
