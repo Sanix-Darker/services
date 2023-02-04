@@ -1,0 +1,10 @@
+[Unit]
+Description=Remote access to a raspberry pi using my telegram bot tchat 
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/python /home/sa/services/tg_interface/script.py
+User=sa
+
+[Install]
+WantedBy=multi-user.target
