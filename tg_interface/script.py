@@ -75,6 +75,7 @@ def is_authorized(update: Update) -> bool:
 
 
 def exec_callback(update: Update, context: CCT) -> None:
+    global _COMMAND_OUTPUT
     try:
         if is_authorized(update) and is_private(update):
             _command = update.message.text
@@ -83,6 +84,8 @@ def exec_callback(update: Update, context: CCT) -> None:
             msg = update.message.reply_text(f"Running your command {_command}...")
 
             _LOOP.run_until_complete(run(_command, msg.edit_text))
+            # to flush the remaining previous command output
+            _COMMAND_OUTPUT = ""
     except Exception as es:
         logging.exception(f"[x] Error {es}")
 
