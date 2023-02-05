@@ -18,6 +18,7 @@ configParser.read(r"config.txt")
 TELEGRAM_TOKEN: str = configParser.get("conf", "TELEGRAM_TOKEN")
 AUTHORIZED_USERS: List[str] = ["sanixdarker", "elhmn42"]
 _LOOP = asyncio.get_event_loop()
+_COMMAND_OUTPUT = ""
 
 
 # the printer could be
@@ -33,11 +34,13 @@ async def run(command: str, printer: Any):
 
     @lru_cache(maxsize=3)
     async def _read_stream(stream, callback):
-        """ """
+        global _COMMAND_OUTPUT
+
         while True:
             line = await stream.readline()
             if line:
-                callback(line.decode("UTF8"))
+                _COMMAND_OUTPUT += line.decode('UTF8')
+                callback(_COMMAND_OUTPUT)
             else:
                 break
 
@@ -87,8 +90,7 @@ def exec_callback(update: Update, context: CCT) -> None:
                 f"Running your command {_command}..."
             )
 
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(run(_command, msg.edit_text))
+            _LOOP.run_until_complete(run(_command, msg.edit_text))
     except Exception as es:
         logging.exception(f"[x] Error {es}")
 
