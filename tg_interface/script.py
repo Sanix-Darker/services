@@ -39,7 +39,7 @@ async def run(command: str, printer: Any):
         while True:
             line = await stream.readline()
             if line:
-                _COMMAND_OUTPUT += line.decode('UTF8')
+                _COMMAND_OUTPUT += line.decode("UTF8")
                 callback(_COMMAND_OUTPUT)
             else:
                 break
@@ -49,16 +49,10 @@ async def run(command: str, printer: Any):
     )
 
     out_task = _LOOP.create_task(
-        _read_stream(
-            process.stdout,
-            lambda x: printer(text=x)
-        )
+        _read_stream(process.stdout, lambda x: printer(text=x))
     )
     err_task = _LOOP.create_task(
-        _read_stream(
-            process.stderr,
-            lambda x: printer(text=x)
-        )
+        _read_stream(process.stderr, lambda x: printer(text=x))
     )
 
     await asyncio.wait({out_task, err_task})
@@ -86,9 +80,7 @@ def exec_callback(update: Update, context: CCT) -> None:
             _command = update.message.text
             logging.info(f"{_command=}")
 
-            msg = update.message.reply_text(
-                f"Running your command {_command}..."
-            )
+            msg = update.message.reply_text(f"Running your command {_command}...")
 
             _LOOP.run_until_complete(run(_command, msg.edit_text))
     except Exception as es:
