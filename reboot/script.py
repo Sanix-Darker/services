@@ -10,12 +10,11 @@ def service():
         time.sleep(3600)
         # if the hour is  between 1hour and 3hour,
         # we are going to reboot
-        if 1 <= now.hour <= 10:
+        if 1 <= now.hour <= 3:
             system("sudo reboot")
 
-        print(f"{now} : stand by...")
+        print(f'{now} : stand by...')
         time.sleep(360)
-
 
 if __name__ == "__main__":
     print("::reboot service started...")
